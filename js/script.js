@@ -33,10 +33,28 @@ con difficoltà 2 => tra 1 e 50
 // array bombe e numeri utente
 const bombs = [];
 const numbers = [];
-const maxNumber = 100;
-const bombNumber = 16;
 
-// generare numeri random per le bombe (fare funzione)
+// numero bombe e livello di difficoltà
+const bombNumber = 16;
+let maxNumber;
+let level = prompt("Inserisci livello di difficoltà '0' '1' '2'");
+while (!level || level.trim() === "" || (level != "0" && level != "1" && level != "2")) {
+    level = prompt("Inserisci livello di difficoltà '0' '1' '2'");
+}
+
+// switch livello di difficoltà
+switch (level) {
+    case "0":
+        maxNumber = 100;
+        break;
+    case "1":
+        maxNumber = 80;
+        break;
+    case "2":
+        maxNumber = 50;
+}
+
+// raccolta dei 16 numeri random per le bombe
 while (bombs.length !== bombNumber) {
     const randomNumber = numberGenerate(1, maxNumber);
     if (!bombs.includes(randomNumber)) {
@@ -52,8 +70,8 @@ while (numbers.length !== (maxNumber - bombNumber)) {
     // chiedere un numero all'utente con validazione
     let userNumber;
     do {
-        userNumber = parseInt(prompt("Inserisci un numero da 1 a 100"));
-    } while (isNaN(userNumber) || userNumber < 1 || userNumber > 100);
+        userNumber = parseInt(prompt("Inserisci un numero da 1 a " + maxNumber));
+    } while (isNaN(userNumber) || userNumber < 1 || userNumber > maxNumber);
 
     // verificare se il numero inserito non è tra i numeri dell'array bombe
     if (!bombs.includes(userNumber)) {
@@ -80,11 +98,3 @@ function numberGenerate(min, max) {
     max++;
     return Math.floor(Math.random() * (max - min)) + min;
 }
-
-
-
-
-
-
-
-
