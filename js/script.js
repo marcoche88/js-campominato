@@ -32,17 +32,46 @@ con difficoltà 2 => tra 1 e 50
 
 // array bombe e numeri utente
 var bombs = [];
-var userNumbers = [];
+var numbers = [];
+var maxNumber = 25;
+var bombNumber = 16;
 
 // generare numeri random per le bombe (fare funzione)
 do {
-    var randomNumber = Math.floor(Math.random() * 100) + 1;
+    var randomNumber = Math.floor(Math.random() * maxNumber) + 1;
     if (!bombs.includes(randomNumber)) {
         bombs.push(randomNumber);
     }
-} while (bombs.length !== 16);
+} while (bombs.length !== bombNumber);
+
+console.log(bombs);
 
 // ripetere il gioco finchè l'utente non ha inserito max - bombe numeri diversi
+while (numbers.length !== (maxNumber - bombNumber)) {
+    // chiedere un numero all'utente
+    var userNumber = parseInt(prompt("Inserisci un numero da 1 a 100"));
+
+    // verificare se il numero inserito non è tra i numeri dell'array bombe
+    if (!bombs.includes(userNumber)) {
+        // verificare se il numero inserito non è tra i numeri dell'array numeri utente
+        if (!numbers.includes(userNumber)) {
+            numbers.push(userNumber);
+        }
+    } else {
+        // utente ha perso, numero presente nell'array bombe
+        alert("Hai preso la bomba! game over. Punteggio: " + numbers.length)
+        break
+    }
+}
+
+// utente ha vinto la partita
+if (numbers.length === (maxNumber - bombNumber)) {
+    alert("Hai vinto. Punteggio finale: " + numbers.length)
+}
+console.log(numbers);
+
+
+
 
 
 
