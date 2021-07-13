@@ -30,12 +30,18 @@ con difficoltà 2 => tra 1 e 50
    comunicare il punteggio finale(lungheza array numeri utente)
 */
 
+// variabili
+const bombsDisplay = document.getElementById("bombs");
+const numberDisplay = document.getElementById("user-number");
+const resultDisplay = document.getElementById("result");
+
 // array bombe e numeri utente
 const bombs = [];
 const numbers = [];
 
-// numero bombe e livello di difficoltà
+// numero bombe e livello di difficoltà (con validazione)
 const bombNumber = 16;
+
 let maxNumber;
 let level = prompt("Inserisci livello di difficoltà '0' '1' '2'");
 while (!level || level.trim() === "" || (level != "0" && level != "1" && level != "2")) {
@@ -80,17 +86,30 @@ while (numbers.length !== (maxNumber - bombNumber)) {
             numbers.push(userNumber);
         }
     } else {
-        // utente ha perso, numero presente nell'array bombe
-        alert("Hai preso la bomba! game over. Punteggio: " + numbers.length);
+        // utente ha perso, numero presente nell'array bombe. stampo
+        resultDisplay.innerText = "Hai preso la bomba! GAME OVER. Punteggio: " + numbers.length;
         break;
     }
 }
 
-// utente ha vinto la partita
+// utente ha vinto la partita e stampo
 if (numbers.length === (maxNumber - bombNumber)) {
-    alert("Hai vinto. Punteggio finale: " + numbers.length);
+    resultDisplay.innerText = "Hai vinto. Punteggio finale: " + numbers.length;
 }
-console.log(numbers);
+
+// stampare su pagina (fare funzione per bomblist e numberslist)
+let bombsList = "";
+for (let i = 0; i < bombs.length; i++) {
+    bombsList += "<li>" + bombs[i] + "</li>";
+}
+bombsDisplay.innerHTML = bombsList;
+
+let numbersList = "";
+for (let i = 0; i < numbers.length; i++) {
+    numbersList += "<li>" + numbers[i] + "</li>";
+}
+numberDisplay.innerHTML = numbersList;
+
 
 // FUNZIONI
 

@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.game {
+    display: flex;
+    justify-content: space-around;
+}
