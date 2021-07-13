@@ -62,13 +62,11 @@ switch (level) {
 
 // raccolta dei 16 numeri random per le bombe
 while (bombs.length !== bombNumber) {
-    const randomNumber = numberGenerate(1, maxNumber);
+    const randomNumber = numberGenerator(1, maxNumber);
     if (!bombs.includes(randomNumber)) {
         bombs.push(randomNumber);
     }
 };
-
-console.log(bombs);
 
 // ripetere il gioco finchè l'utente non ha inserito max - bombe numeri diversi
 while (numbers.length !== (maxNumber - bombNumber)) {
@@ -97,23 +95,23 @@ if (numbers.length === (maxNumber - bombNumber)) {
     resultDisplay.innerText = "Hai vinto. Punteggio finale: " + numbers.length;
 }
 
-// stampare su pagina (fare funzione per bomblist e numberslist)
-let bombsList = "";
-for (let i = 0; i < bombs.length; i++) {
-    bombsList += "<li>" + bombs[i] + "</li>";
-}
-bombsDisplay.innerHTML = bombsList;
+// stampare su pagina le liste
 
-let numbersList = "";
-for (let i = 0; i < numbers.length; i++) {
-    numbersList += "<li>" + numbers[i] + "</li>";
-}
-numberDisplay.innerHTML = numbersList;
+bombsDisplay.innerHTML = listGenerator(bombs);
+numberDisplay.innerHTML = listGenerator(numbers);
 
 
 // FUNZIONI
 
-function numberGenerate(min, max) {
+function numberGenerator(min, max) {
     max++;
     return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function listGenerator(myArray) {
+    let list = "";
+    for (let i = 0; i < myArray.length; i++) {
+        list += "<li>" + myArray[i] + "</li>";
+    }
+    return list;
 }
