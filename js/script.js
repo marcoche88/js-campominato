@@ -39,7 +39,8 @@ const resultDisplay = document.getElementById("result");
 const bombs = [];
 const numbers = [];
 
-// numero bombe e livello di difficoltà (con validazione)
+// valore punteggio, numero bombe e livello di difficoltà (con validazione)
+const score = 1;
 const bombNumber = 16;
 
 let maxNumber;
@@ -85,14 +86,14 @@ while (numbers.length !== (maxNumber - bombNumber)) {
         }
     } else {
         // utente ha perso, numero presente nell'array bombe. stampo
-        resultDisplay.innerText = "Hai preso la bomba! GAME OVER. Punteggio: " + numbers.length;
+        resultDisplay.innerText = "Hai preso la bomba! GAME OVER. Punteggio: " + (numbers.length * score);
         break;
     }
 }
 
 // utente ha vinto la partita e stampo
 if (numbers.length === (maxNumber - bombNumber)) {
-    resultDisplay.innerText = "Hai vinto. Punteggio finale: " + numbers.length;
+    resultDisplay.innerText = "Hai vinto. Punteggio finale: " + (numbers.length * score);
 }
 
 // stampare su pagina le liste
