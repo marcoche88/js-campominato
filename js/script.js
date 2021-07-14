@@ -110,9 +110,6 @@ function numberGenerator(min, max) {
 }
 
 function listGenerator(myArray) {
-    let list = "";
-    for (let i = 0; i < myArray.length; i++) {
-        list += "<li>" + myArray[i] + "</li>";
-    }
+    let list = "<li>" + myArray.join("</li><li>") + "</li>";
     return list;
 }
