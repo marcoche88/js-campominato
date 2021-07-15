@@ -30,24 +30,27 @@ con difficoltà 2 => tra 1 e 50
    comunicare il punteggio finale(lungheza array numeri utente)
 */
 
-// variabili
+// variabili pagina HTML
 const bombsDisplay = document.getElementById("bombs");
 const numberDisplay = document.getElementById("user-number");
 const resultDisplay = document.getElementById("result");
 
-// array bombe e numeri utente
+// array bombe, numeri utente e livelli di difficoltà
 const bombs = [];
 const numbers = [];
+const levels = ["0", "1", "2"];
 
-// valore punteggio, numero bombe e livello di difficoltà (con validazione)
+//valore punteggio, numero bombe, utente perso/vinto e livello di difficoltà
 const score = 1;
 const bombNumber = 16;
-
+let hasLost = false;
 let maxNumber;
-let level = prompt("Inserisci livello di difficoltà '0' '1' '2'");
-while (!level || level.trim() === "" || (level != "0" && level != "1" && level != "2")) {
+let level;
+
+// validazione livello selezionato
+do {
     level = prompt("Inserisci livello di difficoltà '0' '1' '2'");
-}
+} while (!level || !levels.includes(level));
 
 // switch livello di difficoltà
 switch (level) {
@@ -61,6 +64,9 @@ switch (level) {
         maxNumber = 50;
 }
 
+// calcolo chance dell'utente
+const userChance = maxNumber - bombNumber;
+
 // raccolta dei 16 numeri random per le bombe
 while (bombs.length !== bombNumber) {
     const randomNumber = numberGenerator(1, maxNumber);
@@ -69,14 +75,11 @@ while (bombs.length !== bombNumber) {
     }
 };
 
-// ripetere il gioco finchè l'utente non ha inserito max - bombe numeri diversi
-while (numbers.length !== (maxNumber - bombNumber)) {
+// ripetere il gioco finchè l'utente non ha inserito max - bombe numeri diversi e non ha perso
+while (!hasLost && numbers.length !== userChance) {
 
     // chiedere un numero all'utente con validazione
-    let userNumber;
-    do {
-        userNumber = parseInt(prompt("Inserisci un numero da 1 a " + maxNumber));
-    } while (isNaN(userNumber) || userNumber < 1 || userNumber > maxNumber);
+    let userNumber = getUserNumber(1, maxNumber);
 
     // verificare se il numero inserito non è tra i numeri dell'array bombe
     if (!bombs.includes(userNumber)) {
@@ -87,12 +90,12 @@ while (numbers.length !== (maxNumber - bombNumber)) {
     } else {
         // utente ha perso, numero presente nell'array bombe. stampo
         resultDisplay.innerText = "Hai preso la bomba! GAME OVER. Punteggio: " + (numbers.length * score);
-        break;
+        hasLost = true;
     }
 }
 
 // utente ha vinto la partita e stampo
-if (numbers.length === (maxNumber - bombNumber)) {
+if (numbers.length === userChance) {
     resultDisplay.innerText = "Hai vinto. Punteggio finale: " + (numbers.length * score);
 }
 
@@ -109,7 +112,16 @@ function numberGenerator(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
+function getUserNumber(min, max) {
+    let num;
+    do {
+        num = prompt("Inserisci un numero da " + min + " a " + max);
+    } while (!num || num.trim() === "" || isNaN(num) || num < min || num > max);
+    return parseInt(num);
+}
+
 function listGenerator(myArray) {
     let list = "<li>" + myArray.join("</li><li>") + "</li>";
     return list;
 }
+
